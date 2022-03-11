@@ -771,8 +771,9 @@ def train():
         psnr = mse2psnr(img_loss)
         
         ##ssim##
-        
-        ssim = ssim_loss(rgb, target_s)
+        rgb1 = rgb.unsqueeze(0).unsqueeze(0)
+        target_s1 = target_s.unsqueeze(0).unsqueeze(0)
+        ssim = ssim_loss(rgb1, target_s1)
         
         
         if 'rgb0' in extras:
