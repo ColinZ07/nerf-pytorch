@@ -1,4 +1,4 @@
-expname = flower_close_test
+expname = flower_close_layer12
 basedir = ./logs
 datadir = ./data/llff_flower_close
 dataset_type = llff
