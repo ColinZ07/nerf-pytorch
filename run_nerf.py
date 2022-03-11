@@ -709,6 +709,8 @@ def train():
     # writer = SummaryWriter(os.path.join(basedir, 'summaries', expname))
     
     start = start + 1
+    ssim_loss = pytorch_ssim.SSIM(window_size = 11)
+    
     for i in trange(start, N_iters):
         time0 = time.time()
 
@@ -769,7 +771,7 @@ def train():
         psnr = mse2psnr(img_loss)
         
         ##ssim##
-        ssim_loss = pytorch_ssim.SSIM(window_size = 11)
+        
         ssim = ssim_loss(rgb, target_s)
         
         
