@@ -4,6 +4,7 @@ import imageio
 import json
 import random
 import time
+import pytorch_ssim 
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
@@ -766,7 +767,12 @@ def train():
         trans = extras['raw'][...,-1]
         loss = img_loss
         psnr = mse2psnr(img_loss)
-
+        
+        ##ssim##
+        ssim_loss = pytorch_ssim.SSIM(window_size = 11)
+        ssim = ssim_loss(rgb, target_s)
+        
+        
         if 'rgb0' in extras:
             img_loss0 = img2mse(extras['rgb0'], target_s)
             loss = loss + img_loss0
@@ -826,7 +832,7 @@ def train():
 
     
         if i%args.i_print==0:
-            tqdm.write(f"[TRAIN] Iter: {i} Loss: {loss.item()}  PSNR: {psnr.item()}")
+            tqdm.write(f"[TRAIN] Iter: {i} Loss: {loss.item()}  PSNR: {psnr.item()} SSIM: {ssim} ")
         """
             print(expname, i, psnr.numpy(), loss.numpy(), global_step.numpy())
             print('iter time {:.05f}'.format(dt))
